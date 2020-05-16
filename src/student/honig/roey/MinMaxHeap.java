@@ -78,6 +78,13 @@ public class MinMaxHeap {
         return true;
     }
 
+    private static boolean hasRightChild(ArrayList<Integer> A, int i){
+        if (rightChildIndex(i) >= A.size()) {
+            return false;
+        }
+        return true;
+    }
+
     private static int leftChildIndex(int i) {
         return 2 * i + 1;
     }
@@ -162,7 +169,6 @@ public class MinMaxHeap {
         return indexToReturn;
     }
 
-    // in case we know for sure it is a son og a granchild!!
     public static boolean isGrandchild(int m, int i){
         if (leftChildIndex(i) == m || rightChildIndex(i) == m) {
             return false;
@@ -172,7 +178,7 @@ public class MinMaxHeap {
         }
         return false;
     }
-
+    
     private static void swapKeys(ArrayList<Integer> A, int i, int m){
         int tempKey = A.get(i);
         A.set(i,A.get(m));
@@ -187,4 +193,32 @@ public class MinMaxHeap {
         }
     }
 
+    public static boolean hasGrandchildren(ArrayList<Integer> A, int i){
+        if (leftChildIndex(leftChildIndex(i)) >= A.size()) {
+            return false;
+        }
+        return true;
+    }
+
+    public static int getIndexOfLastElementInTheSubHeap(ArrayList<Integer> A, int i){
+        if (hasChildren(A,i)) {
+            if (hasRightChild(A,i)) {
+                int leftBranchLastElementIndex = getIndexOfLastElementInTheSubHeap(A,leftChildIndex(i));
+                int rightBranchLastElementIndex = getIndexOfLastElementInTheSubHeap(A,rightChildIndex(i));
+                return leftBranchLastElementIndex > rightBranchLastElementIndex? leftBranchLastElementIndex : rightBranchLastElementIndex;
+            } else {
+                return getIndexOfLastElementInTheSubHeap(A,leftChildIndex(i));
+            }
+        } else {
+            return i;
+        }
+
+    }
+
+    public static void heapExtractMax(ArrayList<Integer> A){
+        int indexOfLast = getIndexOfLastElementInTheSubHeap(A,0);
+        A.set(0,A.get(indexOfLast));
+        A.remove(indexOfLast);
+        buildMinMaxHeapFromArray(A);
+    }
 }
