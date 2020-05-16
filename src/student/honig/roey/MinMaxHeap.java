@@ -7,11 +7,11 @@ public class MinMaxHeap {
     public static void buildMinMaxHeapFromArray(ArrayList<Integer> A)
     {
         for (int i = A.size()/2; i > -1; i--) {
-            pushDown(A,i);
+            heapify(A,i);
         }
     }
 
-    private static void pushDown(ArrayList<Integer> A, int i){
+    private static void heapify(ArrayList<Integer> A, int i){
         if (MinMaxHeap.isOnMinLevel(i)) {
             pushDownMin(A,i);
         } else {
