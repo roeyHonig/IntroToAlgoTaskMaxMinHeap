@@ -1,15 +1,17 @@
 package student.honig.roey;
 
+import java.util.ArrayList;
+
 public class MinMaxHeap {
 
-    public static void buildMinMaxHeapFromArray(int[] A)
+    public static void buildMinMaxHeapFromArray(ArrayList<Integer> A)
     {
-        for (int i = A.length/2; i > -1; i--) {
+        for (int i = A.size()/2; i > -1; i--) {
             pushDown(A,i);
         }
     }
 
-    private static void pushDown(int[] A, int i){
+    private static void pushDown(ArrayList<Integer> A, int i){
         if (MinMaxHeap.isOnMinLevel(i)) {
             pushDownMin(A,i);
         } else {
@@ -33,44 +35,44 @@ public class MinMaxHeap {
         return result;
     }
 
-    private static void pushDownMin(int[] A, int i){
+    private static void pushDownMin(ArrayList<Integer> A, int i){
         if (hasChildren(A,i)) {
             int m = getIndexOfSmallestChildeOrGrandchile(A,i);
             if (isGrandchild(m,i)) {
-                if (A[m] < A[i]) {
+                if (A.get(m) < A.get(i)) {
                     swapKeys(A,i,m);
                     int indexOfParent = parentOfIndex(m);
-                    if (A[m] > A[indexOfParent]) {
+                    if (A.get(m) > A.get(indexOfParent)) {
                         swapKeys(A,m,indexOfParent);
                     }
                     pushDownMin(A,m);
                 }
-            } else if (A[m] < A[i]) {
+            } else if (A.get(m) < A.get(i)) {
                 swapKeys(A,i,m);
             }
         }
     }
 
-    private static void pushDownMax(int[] A, int i){
+    private static void pushDownMax(ArrayList<Integer> A, int i){
         if (hasChildren(A,i)) {
             int m = getIndexOfLargestChildeOrGrandchile(A,i);
             if (isGrandchild(m,i)) {
-                if (A[m] > A[i]) {
+                if (A.get(m) > A.get(i)) {
                     swapKeys(A,i,m);
                     int indexOfParent = parentOfIndex(m);
-                    if (A[m] < A[indexOfParent]) {
+                    if (A.get(m) < A.get(indexOfParent)) {
                         swapKeys(A,m,indexOfParent);
                     }
                     pushDownMax(A,m);
                 }
-            } else if (A[m] > A[i]) {
+            } else if (A.get(m) > A.get(i)) {
                 swapKeys(A,i,m);
             }
         }
     }
 
-    private static boolean hasChildren(int[] A, int i){
-        if (leftChildIndex(i) >= A.length) {
+    private static boolean hasChildren(ArrayList<Integer> A, int i){
+        if (leftChildIndex(i) >= A.size()) {
             return false;
         }
         return true;
@@ -84,7 +86,7 @@ public class MinMaxHeap {
         return 2 * i + 2;
     }
 
-    private static int getIndexOfSmallestChildeOrGrandchile(int[] A,int i) {
+    private static int getIndexOfSmallestChildeOrGrandchile(ArrayList<Integer> A,int i) {
         int indexLeft = leftChildIndex(i);
         int indexRight = rightChildIndex(i);
         int indexLeftLeft = leftChildIndex(indexLeft);
@@ -92,31 +94,31 @@ public class MinMaxHeap {
         int indexRightLeft = leftChildIndex(indexRight);
         int indexRightRight = rightChildIndex(indexRight);
         int indexToReturn = indexLeft;
-        int minKey = A[indexLeft];
-        if (indexRight < A.length && minKey > A[indexRight]) {
-            minKey = A[indexRight];
+        int minKey = A.get(indexLeft);
+        if (indexRight < A.size() && minKey > A.get(indexRight)) {
+            minKey = A.get(indexRight);
             indexToReturn = indexRight;
         }
-        if (indexLeftLeft < A.length && minKey > A[indexLeftLeft]) {
-            minKey = A[indexLeftLeft];
+        if (indexLeftLeft < A.size() && minKey > A.get(indexLeftLeft)) {
+            minKey = A.get(indexLeftLeft);
             indexToReturn = indexLeftLeft;
         }
-        if (indexLeftRight < A.length && minKey > A[indexLeftRight]) {
-            minKey = A[indexLeftRight];
+        if (indexLeftRight < A.size() && minKey > A.get(indexLeftRight)) {
+            minKey = A.get(indexLeftRight);
             indexToReturn = indexLeftRight;
         }
-        if (indexRightLeft < A.length && minKey > A[indexRightLeft]) {
-            minKey = A[indexRightLeft];
+        if (indexRightLeft < A.size() && minKey > A.get(indexRightLeft)) {
+            minKey = A.get(indexRightLeft);
             indexToReturn = indexRightLeft;
         }
-        if (indexRightRight < A.length && minKey > A[indexRightRight]) {
-            minKey = A[indexRightRight];
+        if (indexRightRight < A.size() && minKey > A.get(indexRightRight)) {
+            minKey = A.get(indexRightRight);
             indexToReturn = indexRightRight;
         }
         return indexToReturn;
     }
 
-    private static int getIndexOfLargestChildeOrGrandchile(int[] A,int i) {
+    private static int getIndexOfLargestChildeOrGrandchile(ArrayList<Integer> A,int i) {
         int indexLeft = leftChildIndex(i);
         int indexRight = rightChildIndex(i);
         int indexLeftLeft = leftChildIndex(indexLeft);
@@ -124,25 +126,25 @@ public class MinMaxHeap {
         int indexRightLeft = leftChildIndex(indexRight);
         int indexRightRight = rightChildIndex(indexRight);
         int indexToReturn = indexLeft;
-        int maxKey = A[indexLeft];
-        if (indexRight < A.length && maxKey < A[indexRight]) {
-            maxKey = A[indexRight];
+        int maxKey = A.get(indexLeft);
+        if (indexRight < A.size() && maxKey < A.get(indexRight)) {
+            maxKey = A.get(indexRight);
             indexToReturn = indexRight;
         }
-        if (indexLeftLeft < A.length && maxKey < A[indexLeftLeft]) {
-            maxKey = A[indexLeftLeft];
+        if (indexLeftLeft < A.size() && maxKey < A.get(indexLeftLeft)) {
+            maxKey = A.get(indexLeftLeft);
             indexToReturn = indexLeftLeft;
         }
-        if (indexLeftRight < A.length && maxKey < A[indexLeftRight]) {
-            maxKey = A[indexLeftRight];
+        if (indexLeftRight < A.size() && maxKey < A.get(indexLeftRight)) {
+            maxKey = A.get(indexLeftRight);
             indexToReturn = indexLeftRight;
         }
-        if (indexRightLeft < A.length && maxKey < A[indexRightLeft]) {
-            maxKey = A[indexRightLeft];
+        if (indexRightLeft < A.size() && maxKey < A.get(indexRightLeft)) {
+            maxKey = A.get(indexRightLeft);
             indexToReturn = indexRightLeft;
         }
-        if (indexRightRight < A.length && maxKey < A[indexRightRight]) {
-            maxKey = A[indexRightRight];
+        if (indexRightRight < A.size() && maxKey < A.get(indexRightRight)) {
+            maxKey = A.get(indexRightRight);
             indexToReturn = indexRightRight;
         }
         return indexToReturn;
@@ -155,10 +157,10 @@ public class MinMaxHeap {
         return true;
     }
 
-    private static void swapKeys(int[] A, int i, int m){
-        int tempKey = A[i];
-        A[i] = A[m];
-        A[m] = tempKey;
+    private static void swapKeys(ArrayList<Integer> A, int i, int m){
+        int tempKey = A.get(i);
+        A.set(i,A.get(m));
+        A.set(m,tempKey);
     }
 
     private static int parentOfIndex(int i) {
