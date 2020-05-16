@@ -150,11 +150,27 @@ public class MinMaxHeap {
         return indexToReturn;
     }
 
-    private static boolean isGrandchild(int m, int i){
+    private static int getIndexOfLargestChilde(ArrayList<Integer> A,int i) {
+        int indexLeft = leftChildIndex(i);
+        int indexRight = rightChildIndex(i);
+        int indexToReturn = indexLeft;
+        int maxKey = A.get(indexLeft);
+        if (indexRight < A.size() && maxKey < A.get(indexRight)) {
+            maxKey = A.get(indexRight);
+            indexToReturn = indexRight;
+        }
+        return indexToReturn;
+    }
+
+    // in case we know for sure it is a son og a granchild!!
+    public static boolean isGrandchild(int m, int i){
         if (leftChildIndex(i) == m || rightChildIndex(i) == m) {
             return false;
         }
-        return true;
+        if (leftChildIndex(leftChildIndex(i)) == m || leftChildIndex(rightChildIndex(i)) == m || rightChildIndex(leftChildIndex(i)) == m || rightChildIndex(rightChildIndex(i)) == m ) {
+            return true;
+        }
+        return false;
     }
 
     private static void swapKeys(ArrayList<Integer> A, int i, int m){
