@@ -234,4 +234,21 @@ public class MinMaxHeap {
         A.remove(indexOfLast);
         buildMinMaxHeapFromArray(A);
     }
+
+    public static void heapInsert(ArrayList<Integer> A, Integer key){
+        A.add(key);
+        buildMinMaxHeapFromArray(A);
+    }
+
+    public static boolean heapDelete(ArrayList<Integer> A, int i){
+        if (A.size() == 0 || i < 0 || i >= A.size()) {
+            return false;
+        }
+        int indexOfLast = getIndexOfLastElementInTheSubHeap(A,0);
+        A.set(i,A.get(indexOfLast));
+        A.remove(indexOfLast);
+        buildMinMaxHeapFromArray(A);
+        return true;
+    }
+
 }
