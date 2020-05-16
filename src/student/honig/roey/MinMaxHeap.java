@@ -20,9 +20,9 @@ public class MinMaxHeap {
     public static boolean isOnMinLevel(int i) {
         int j = i + 1;
         if (log2(j) % 2 == 0) {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     private static int log2(int N)
