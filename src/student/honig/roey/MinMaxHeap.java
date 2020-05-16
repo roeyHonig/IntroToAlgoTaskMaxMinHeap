@@ -178,7 +178,7 @@ public class MinMaxHeap {
         }
         return false;
     }
-    
+
     private static void swapKeys(ArrayList<Integer> A, int i, int m){
         int tempKey = A.get(i);
         A.set(i,A.get(m));
@@ -218,6 +218,19 @@ public class MinMaxHeap {
     public static void heapExtractMax(ArrayList<Integer> A){
         int indexOfLast = getIndexOfLastElementInTheSubHeap(A,0);
         A.set(0,A.get(indexOfLast));
+        A.remove(indexOfLast);
+        buildMinMaxHeapFromArray(A);
+    }
+
+    public static void heapExtractMin(ArrayList<Integer> A){
+        int indexOfLast = getIndexOfLastElementInTheSubHeap(A,0);
+        int indexOfMiniumKey = 0;
+        if (hasRightChild(A,0)) {
+            indexOfMiniumKey = A.get(1) < A.get(2) ? 1 : 2;
+        } else {
+            indexOfMiniumKey = 1;
+        }
+        A.set(indexOfMiniumKey,A.get(indexOfLast));
         A.remove(indexOfLast);
         buildMinMaxHeapFromArray(A);
     }
