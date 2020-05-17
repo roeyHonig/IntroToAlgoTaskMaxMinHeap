@@ -11,7 +11,7 @@ public class MaxMinHeapService {
         }
     }
 
-    private static void heapify(ArrayList<Integer> A, int i){
+    public static void heapify(ArrayList<Integer> A, int i){
         if (MaxMinHeapService.isOnMinLevel(i)) {
             pushDownMin(A,i);
         } else {
