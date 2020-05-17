@@ -31,6 +31,9 @@ public class MaxMinHeapPlayground {
         PRINT_ORIGINAL_HEAP_FROM_LOCAL_FILE,
         HEAPIFY,
         EXTRACT_MAX,
+        EXTRACT_MIN,
+        HEAP_INSERT,
+        HEAP_DELETE,
         EXIT_PROGRAM;
 
         private static HeapMenuActions[] allValues = values();
@@ -97,6 +100,11 @@ public class MaxMinHeapPlayground {
                 System.out.println("1. Print the current Max-Min Heap");
                 System.out.println("2. Print the original Heap, which was loaded from local file");
                 System.out.println("3. Perform Heapify on a specific index. Mutating Action!");
+                System.out.println("4. Extract the maximum key from the Max-Min-Heap. Mutating Action!");
+                System.out.println("5. Extract the minimum key from the Max-Min-Heap. Mutating Action!");
+                System.out.println("6. Insert key to the Max-Min-Heap. Mutating Action!");
+                System.out.println("7. Delete index from the Max-Min-Heap. Mutating Action!");
+                System.out.println("8. Exit Program");
                 System.out.print("Please Enter Your Choice: ");
                 Scanner scanner = new Scanner(System.in);
                 if (scanner.hasNextInt()) {
@@ -161,7 +169,6 @@ public class MaxMinHeapPlayground {
                 boolean success = buildHeap();
                 if (!success) {
                     System.out.println("Ooops, Something went wrong while trying to build the Max-Min Heap. Please try again");
-                    System.out.println();
                 }
                 break;
             case EXIT_PROGRAM:
@@ -169,29 +176,45 @@ public class MaxMinHeapPlayground {
                 break;
             default:
                 System.out.println("Non Valid Selection. Please choose again");
-                System.out.println();
         }
+        System.out.println();
+
 
     }
 
     private static void handleHeapMenuAction(HeapMenuActions action){
         switch(action) {
             case PRINT_MAX_MIN_HEAP:
-                System.out.println("the array as Max-Min Heap: " + stringRepresentationOfArrayList(currentHeap));
-                System.out.println();
+                System.out.println("current Max-Min Heap: " + stringRepresentationOfArrayList(currentHeap));
                 break;
             case PRINT_ORIGINAL_HEAP_FROM_LOCAL_FILE:
                 System.out.println("the original Heap: " + stringRepresentationOfArrayList(currentHeap));
-                System.out.println();
                 break;
             case HEAPIFY:
                 heapify();
-                System.out.println();
+                break;
+            case EXTRACT_MAX:
+                MaxMinHeapService.heapExtractMax(currentHeap);
+                System.out.println("current Max-Min Heap: " + stringRepresentationOfArrayList(currentHeap));
+                break;
+            case EXTRACT_MIN:
+                MaxMinHeapService.heapExtractMin(currentHeap);
+                System.out.println("current Max-Min Heap: " + stringRepresentationOfArrayList(currentHeap));
+                break;
+            case HEAP_INSERT:
+                heapInsert();
+                break;
+            case HEAP_DELETE:
+                heapDelete();
+                break;
+            case EXIT_PROGRAM:
+                exitProgram = true;
                 break;
             default:
                 System.out.println("Non Valid Selection. Please choose again");
-                System.out.println();
+
         }
+        System.out.println();
 
     }
 
@@ -232,6 +255,38 @@ public class MaxMinHeapPlayground {
             }
             MaxMinHeapService.heapify(currentHeapifyHeap,index);
             System.out.println("Heap after heapify of index "+index+" : " + stringRepresentationOfArrayList(currentHeapifyHeap));
+        } else {
+            System.out.println("Not a Number");
+        }
+        scanner.nextLine();
+        System.out.println();
+    }
+
+    private static void heapInsert(){
+        System.out.print("Enter the key value to insert into the Max-Min-Heap: ");
+        Scanner scanner = new Scanner(System.in);
+        if (scanner.hasNextInt()) {
+            int key = scanner.nextInt();
+            MaxMinHeapService.heapInsert(currentHeap,key);
+            System.out.println("Heap after inserting key "+key+" : " + stringRepresentationOfArrayList(currentHeap));
+        } else {
+            System.out.println("Not a Number");
+        }
+        scanner.nextLine();
+        System.out.println();
+    }
+
+    private static void heapDelete(){
+        System.out.print("Enter the index 0-"+(currentHeap.size()-1) + " to delete: ");
+        Scanner scanner = new Scanner(System.in);
+        if (scanner.hasNextInt()) {
+            int index = scanner.nextInt();
+            if (index < 0 || index >= currentHeap.size()) {
+                System.out.println("Selected index is out of bounds");
+                return;
+            }
+            MaxMinHeapService.heapDelete(currentHeap,index);
+            System.out.println("Heap after delete of index "+index+" : " + stringRepresentationOfArrayList(currentHeap));
         } else {
             System.out.println("Not a Number");
         }
