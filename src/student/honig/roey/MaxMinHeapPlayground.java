@@ -9,44 +9,6 @@ import java.util.Scanner;
 
 public class MaxMinHeapPlayground {
 
-    private enum StartMenuActions{
-        NON_VALID_OPTION,
-        LOAD_HEAP_FROM_FILE,
-        EXIT_PROGRAM;
-
-        private static StartMenuActions[] allValues = values();
-        public static StartMenuActions fromOrdinal(int n) {
-            if (n >= 0 && n < allValues.length) {
-                return allValues[n];
-            } else {
-                return NON_VALID_OPTION;
-            }
-
-        }
-    }
-
-    private enum HeapMenuActions{
-        NON_VALID_OPTION,
-        PRINT_MAX_MIN_HEAP,
-        PRINT_ORIGINAL_HEAP_FROM_LOCAL_FILE,
-        HEAPIFY,
-        EXTRACT_MAX,
-        EXTRACT_MIN,
-        HEAP_INSERT,
-        HEAP_DELETE,
-        EXIT_PROGRAM;
-
-        private static HeapMenuActions[] allValues = values();
-        public static HeapMenuActions fromOrdinal(int n) {
-            if (n >= 0 && n < allValues.length) {
-                return allValues[n];
-            } else {
-                return NON_VALID_OPTION;
-            }
-
-        }
-    }
-
     private static boolean exitProgram = false;
     private static ArrayList<Integer> originalHeap = new ArrayList<>();
     private static ArrayList<Integer> currentHeapifyHeap = new ArrayList<>();
@@ -121,6 +83,61 @@ public class MaxMinHeapPlayground {
         } while (!exitProgram && (currentHeap == null || currentHeap.size() == 0));
     }
 
+    private static void handleStartMenuAction(StartMenuActions action){
+        switch(action) {
+            case LOAD_HEAP_FROM_FILE:
+                boolean success = buildHeap();
+                if (!success) {
+                    System.out.println("Ooops, Something went wrong while trying to build the Max-Min Heap. Please try again");
+                }
+                break;
+            case EXIT_PROGRAM:
+                exitProgram = true;
+                break;
+            default:
+                System.out.println("Non Valid Selection. Please choose again");
+        }
+        System.out.println();
+
+
+    }
+
+    private static void handleHeapMenuAction(HeapMenuActions action){
+        switch(action) {
+            case PRINT_MAX_MIN_HEAP:
+                System.out.println("current Max-Min Heap: " + stringRepresentationOfArrayList(currentHeap));
+                break;
+            case PRINT_ORIGINAL_HEAP_FROM_LOCAL_FILE:
+                System.out.println("the original Heap: " + stringRepresentationOfArrayList(originalHeap));
+                break;
+            case HEAPIFY:
+                heapify();
+                break;
+            case EXTRACT_MAX:
+                MaxMinHeapService.heapExtractMax(currentHeap);
+                System.out.println("current Max-Min Heap: " + stringRepresentationOfArrayList(currentHeap));
+                break;
+            case EXTRACT_MIN:
+                MaxMinHeapService.heapExtractMin(currentHeap);
+                System.out.println("current Max-Min Heap: " + stringRepresentationOfArrayList(currentHeap));
+                break;
+            case HEAP_INSERT:
+                heapInsert();
+                break;
+            case HEAP_DELETE:
+                heapDelete();
+                break;
+            case EXIT_PROGRAM:
+                exitProgram = true;
+                break;
+            default:
+                System.out.println("Non Valid Selection. Please choose again");
+
+        }
+        System.out.println();
+
+    }
+
     private static ArrayList<Integer> getHeapFromFileWithFullPath(String path){
         //creating File instance to reference text file in Java
         File text = new File(path);
@@ -161,61 +178,6 @@ public class MaxMinHeapPlayground {
         }
         MaxMinHeapService.buildMinMaxHeapFromArray(currentHeap);
         return true;
-    }
-
-    private static void handleStartMenuAction(StartMenuActions action){
-        switch(action) {
-            case LOAD_HEAP_FROM_FILE:
-                boolean success = buildHeap();
-                if (!success) {
-                    System.out.println("Ooops, Something went wrong while trying to build the Max-Min Heap. Please try again");
-                }
-                break;
-            case EXIT_PROGRAM:
-                exitProgram = true;
-                break;
-            default:
-                System.out.println("Non Valid Selection. Please choose again");
-        }
-        System.out.println();
-
-
-    }
-
-    private static void handleHeapMenuAction(HeapMenuActions action){
-        switch(action) {
-            case PRINT_MAX_MIN_HEAP:
-                System.out.println("current Max-Min Heap: " + stringRepresentationOfArrayList(currentHeap));
-                break;
-            case PRINT_ORIGINAL_HEAP_FROM_LOCAL_FILE:
-                System.out.println("the original Heap: " + stringRepresentationOfArrayList(currentHeap));
-                break;
-            case HEAPIFY:
-                heapify();
-                break;
-            case EXTRACT_MAX:
-                MaxMinHeapService.heapExtractMax(currentHeap);
-                System.out.println("current Max-Min Heap: " + stringRepresentationOfArrayList(currentHeap));
-                break;
-            case EXTRACT_MIN:
-                MaxMinHeapService.heapExtractMin(currentHeap);
-                System.out.println("current Max-Min Heap: " + stringRepresentationOfArrayList(currentHeap));
-                break;
-            case HEAP_INSERT:
-                heapInsert();
-                break;
-            case HEAP_DELETE:
-                heapDelete();
-                break;
-            case EXIT_PROGRAM:
-                exitProgram = true;
-                break;
-            default:
-                System.out.println("Non Valid Selection. Please choose again");
-
-        }
-        System.out.println();
-
     }
 
     private static String stringRepresentationOfArray(int[] A) {
@@ -293,4 +255,5 @@ public class MaxMinHeapPlayground {
         scanner.nextLine();
         System.out.println();
     }
+
 }
