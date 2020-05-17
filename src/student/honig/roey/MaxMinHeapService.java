@@ -2,7 +2,7 @@ package student.honig.roey;
 
 import java.util.ArrayList;
 
-public class MinMaxHeap {
+public class MaxMinHeapService {
 
     public static void buildMinMaxHeapFromArray(ArrayList<Integer> A)
     {
@@ -12,7 +12,7 @@ public class MinMaxHeap {
     }
 
     private static void heapify(ArrayList<Integer> A, int i){
-        if (MinMaxHeap.isOnMinLevel(i)) {
+        if (MaxMinHeapService.isOnMinLevel(i)) {
             pushDownMin(A,i);
         } else {
             pushDownMax(A,i);
