@@ -1,5 +1,7 @@
 package student.honig.roey;
 
+import com.sun.tools.javadoc.Start;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -7,31 +9,109 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+// "/Users/roeyHonig/textFiles/array2.txt"
+
 public class MaxMinHeapPlayground {
 
     private enum StartMenuActions{
         NON_VALID_OPTION,
         LOAD_HEAP_FROM_FILE,
         EXIT_PROGRAM;
+
+        private static StartMenuActions[] allValues = values();
+        public static StartMenuActions fromOrdinal(int n) {
+            if (n >= 0 && n < allValues.length) {
+                return allValues[n];
+            } else {
+                return NON_VALID_OPTION;
+            }
+
+        }
     }
 
     private enum HeapMenuActions{
         NON_VALID_OPTION,
-        BUILD_MAX_MIN_HEAP,
+        PRINT_HEAP_TO_SCREEN,
         EXTRACT_MAX,
         EXIT_PROGRAM;
+
+        private static HeapMenuActions[] allValues = values();
+        public static HeapMenuActions fromOrdinal(int n) {
+            if (n >= 0 && n < allValues.length) {
+                return allValues[n];
+            } else {
+                return NON_VALID_OPTION;
+            }
+
+        }
     }
 
     private static boolean exitProgram = false;
+    private static ArrayList<Integer> currentHeap = new ArrayList<>();
 
     public static void main(String[] args) {
-        // write your code here
+        presentStartMenu();
+        while (!exitProgram) {
+            presentHeapMenu();
+        }
 
+    }
+
+    private static void presentStartMenu(){
+        do {
+            boolean validChoiceEntered = false;
+            int choice = 0;
+            StartMenuActions action;
+            do {
+                System.out.println("Welcome to the Max-Min Heap Playground");
+                System.out.println("Please choose an option");
+                System.out.println("1. Build a Max-Min Heap from data stored at a local txt file");
+                System.out.println("2. Exit Program");
+                System.out.print("Please Enter Your Choice: ");
+                Scanner scanner = new Scanner(System.in);
+                if (scanner.hasNextInt()) {
+                    choice = scanner.nextInt();
+                    validChoiceEntered = true;
+                } else {
+                    System.out.println("Non Valid Selection. Please choose again");
+                }
+                scanner.nextLine();
+                System.out.println("");
+                action = StartMenuActions.fromOrdinal(choice);
+            } while (!validChoiceEntered);
+            handleStartMenuAction(action);
+        } while (!exitProgram && (currentHeap == null || currentHeap.size() == 0));
+    }
+
+    private static void presentHeapMenu(){
+        do {
+            boolean validChoiceEntered = false;
+            int choice = 0;
+            HeapMenuActions action;
+            do {
+                System.out.println("Playground is ready for you");
+                System.out.println("What would you like to do now?");
+                System.out.println("1. Print the current Max-Min Heap");
+                System.out.println("2. Exit Program");
+                System.out.print("Please Enter Your Choice: ");
+                Scanner scanner = new Scanner(System.in);
+                if (scanner.hasNextInt()) {
+                    choice = scanner.nextInt();
+                    validChoiceEntered = true;
+                } else {
+                    System.out.println("Not a Number");
+                }
+                scanner.nextLine();
+                System.out.println("");
+                action = HeapMenuActions.fromOrdinal(choice);
+            } while (!validChoiceEntered);
+            handleHeapMenuAction(action);
+        } while (!exitProgram && (currentHeap == null || currentHeap.size() == 0));
+    }
+
+    private static ArrayList<Integer> getHeapFromFileWithFullPath(String path){
         //creating File instance to reference text file in Java
-        File text = new File("/Users/roeyHonig/textFiles/array2.txt");
-
-
-        System.out.print("Please Enter Your Array spaced with ,: ");
+        File text = new File(path);
         Scanner scanner = null;
         try
         {
@@ -40,153 +120,68 @@ public class MaxMinHeapPlayground {
         }
         catch (FileNotFoundException ex)
         {
-            // insert code to run when exception occurs
+            return null;
         }
-        /*
-        int roey = 0;
-        int ido = 0;
-        int may = 0;
-        //String line = scanner.nextLine();
-        if (scanner != null && scanner.hasNextInt()){
-            roey = scanner.nextInt();
-        }
-        if (scanner != null && scanner.hasNextInt()){
-            ido = scanner.nextInt();
-        }
-        if (scanner != null && scanner.hasNextInt()){
-            may = scanner.nextInt();
-        }
-        */
-        //int roey = StartMenuOption.LOAD_HEAP_FROM_FILE.ordinal();
-        ArrayList<Integer> B = new ArrayList<>();
+
+        ArrayList<Integer> parsedArrayList = new ArrayList<>();
         if (scanner != null) {
 
             while (scanner.hasNext()) {
                 if (scanner.hasNextInt()) {
-                    B.add(scanner.nextInt());
+                    parsedArrayList.add(scanner.nextInt());
                 } else {
                     scanner.next();
                 }
             }
         }
-
-        System.out.println("the array as Max-Min Heap after deleting: " + stringRepresentationOfArrayList(B));
-        presentStartMenu();
-        while (!exitProgram) {
-            presentHeapMenu();
-        }
-
-        /*
-        int[] A = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
-        ArrayList<Integer> B = new ArrayList<>();
-        for (int i = 0; i < A.length; i++) {
-            B.add(A[i]);
-        }
-        System.out.println("the array is: " + stringRepresentationOfArray(A));
-        System.out.println("the arrayList is: " + stringRepresentationOfArrayList(B));
-        MaxMinHeapService.buildMinMaxHeapFromArray(B);
-        System.out.println("the array as Max-Min Heap is: " + stringRepresentationOfArrayList(B));
-        Boolean roey = MaxMinHeapService.isOnMinLevel(7);
-        System.out.println("is on min level: " + roey);
-        boolean ido = MaxMinHeapService.isGrandchild(11,1);
-        System.out.println("is grandchild: " + ido);
-        boolean may = MaxMinHeapService.hasGrandchildren(B,4);
-        System.out.println("has grandchild: " + may);
-        int yhaoo = MaxMinHeapService.getIndexOfLastElementInTheSubHeap(B,3);
-        System.out.println("last element index: " + yhaoo);
-        MaxMinHeapService.heapDelete(B,2);
-        System.out.println("the array as Max-Min Heap after deleting: " + stringRepresentationOfArrayList(B));
-        */
+        return parsedArrayList;
     }
 
-    private static void presentStartMenu(){
-        boolean validChoiseEntered = false;
-        do {
-            System.out.println("Welcome to the Max-Min Heap Playground");
-            System.out.println("What would you like to do now?");
-            System.out.println("1. Build a Max-Min Heap from a local file");
-            System.out.println("2. Exit Program");
-            System.out.print("Please Enter Your Choice: ");
-            Scanner scanner = new Scanner(System.in);
-
-            int choice = 0;
-            if (scanner.hasNextInt()) {
-                choice = scanner.nextInt();
-                validChoiseEntered = true;
-            } else {
-                System.out.println("Not a Number");
-            }
-            scanner.nextLine();
-            System.out.println("");
-        } while (!validChoiseEntered);
-
-
-
-
-        /*
-        int first = 0;
-        try {
-            first = scanner.nextInt();
-        } catch (Exception e) {
-            System.out.println("Not a Number");
+    private static boolean buildHeap(){
+        System.out.println("Please enter The full path, including .txt extension, to the file containing the Heap Dat: ");
+        Scanner scanner = new Scanner(System.in);
+        String path = scanner.nextLine();
+        currentHeap = getHeapFromFileWithFullPath(path);
+        if (currentHeap == null || currentHeap.size() == 0) {
+            return false;
         }
-        System.out.print("Please Enter Your Choice: ");
-        */
-
-
-        /*
-        String first = scanner.nextLine();
-        try {
-            Integer firstAsInteger = Integer.parseInt(first);
-        } catch (Exception e) {
-            System.out.println("Not a Number");
-        }
-        */
+        MaxMinHeapService.buildMinMaxHeapFromArray(currentHeap);
+        return true;
     }
 
-    private static void presentHeapMenu(){
-        boolean validChoiseEntered = false;
-        do {
-            System.out.println("Welcome to the Max-Min Heap Playground");
-            System.out.println("What would you like to do now?");
-            System.out.println("1. Build a Max-Min Heap from a local file");
-            System.out.println("2. Exit Program");
-            System.out.print("Please Enter Your Choice: ");
-            Scanner scanner = new Scanner(System.in);
-
-            int choice = 0;
-            if (scanner.hasNextInt()) {
-                choice = scanner.nextInt();
-                validChoiseEntered = true;
-            } else {
-                System.out.println("Not a Number");
-            }
-            scanner.nextLine();
-            System.out.println("");
-        } while (!validChoiseEntered);
-
-
-
-
-        /*
-        int first = 0;
-        try {
-            first = scanner.nextInt();
-        } catch (Exception e) {
-            System.out.println("Not a Number");
+    private static void handleStartMenuAction(StartMenuActions action){
+        switch(action) {
+            case LOAD_HEAP_FROM_FILE:
+                boolean success = buildHeap();
+                if (!success) {
+                    System.out.println("Ooops, Something went wrong while trying to build the Max-Min Heap. Please try again");
+                    System.out.println();
+                }
+                break;
+            case EXIT_PROGRAM:
+                exitProgram = true;
+                break;
+            default:
+                System.out.println("Non Valid Selection. Please choose again");
+                System.out.println();
         }
-        System.out.print("Please Enter Your Choice: ");
-        */
 
+    }
 
-        /*
-        String first = scanner.nextLine();
-        try {
-            Integer firstAsInteger = Integer.parseInt(first);
-        } catch (Exception e) {
-            System.out.println("Not a Number");
+    private static void handleHeapMenuAction(HeapMenuActions action){
+        switch(action) {
+            case PRINT_HEAP_TO_SCREEN:
+                System.out.println("the array as Max-Min Heap: " + stringRepresentationOfArrayList(currentHeap));
+                System.out.println();
+                break;
+            case EXIT_PROGRAM:
+                exitProgram = true;
+                break;
+            default:
+                System.out.println("Non Valid Selection. Please choose again");
+                System.out.println();
         }
-        */
+
     }
 
     private static String stringRepresentationOfArray(int[] A) {
