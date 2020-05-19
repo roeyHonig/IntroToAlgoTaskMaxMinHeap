@@ -1,5 +1,9 @@
 package student.honig.roey;
-
+/** Enumeration class stating different actions the user can perform following the loading of initial heap from a local file
+ * @author Roey Honig
+ * @author ID: roeyhonig94@gmail.com
+ * @author ID: 060873940
+ */
 public enum HeapMenuActions {
 
     NON_VALID_OPTION,
