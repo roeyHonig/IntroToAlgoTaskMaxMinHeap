@@ -6,7 +6,15 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 // "/Users/roeyHonig/textFiles/array2.txt"
-
+/** This is a short program allowing the user to build a Max-Min heap from data, stored in a local text file, as well as manipulating the Max-Min heap by performing other actions on it.
+ *<p>
+ * A Max-Min Heap is
+ *</p>
+ *
+ * @author Roey Honig
+ * @author ID: roeyhonig94@gmail.com
+ * @author ID: 060873940
+ */
 public class MaxMinHeapPlayground {
 
     private static boolean exitProgram = false;
