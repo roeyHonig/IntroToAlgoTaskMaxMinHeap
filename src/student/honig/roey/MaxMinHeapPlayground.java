@@ -7,9 +7,6 @@ import java.util.Scanner;
 
 // "/Users/roeyHonig/textFiles/array2.txt"
 /** This is the main program allowing the user to build a Max-Min heap from data, stored in a local text file, as well as manipulating the Max-Min heap by performing other actions on it.
- *<p>
- * A Max-Min Heap is
- *</p>
  *
  * @author Roey Honig
  * @author ID: roeyhonig94@gmail.com
@@ -36,11 +33,7 @@ public class MaxMinHeapPlayground {
             int choice = 0;
             StartMenuActions action;
             do {
-                System.out.println("Welcome to the Max-Min Heap Playground");
-                System.out.println("Please choose an option");
-                System.out.println("1. Build a Max-Min Heap from data stored in a local txt file");
-                System.out.println("2. Exit Program");
-                System.out.print("Please Enter Your Choice: ");
+                presentTextForStartMenu();
                 Scanner scanner = new Scanner(System.in);
                 if (scanner.hasNextInt()) {
                     choice = scanner.nextInt();
@@ -57,25 +50,13 @@ public class MaxMinHeapPlayground {
     }
 
     private static void presentHeapMenu(){
-        System.out.println("Playground is ready for you");
-        System.out.println("You can view your original Heap");
-        System.out.println("You can incrementally perform heapify actions on the original heap, thus mutating it, step by step into Max-Min Heap");
-        System.out.println("In Addition, we've already built a Max-Min-Heap from your original heap. You can perform actions on it also.");
+        presentHeapMenuIntroductionText();
         do {
             boolean validChoiceEntered = false;
             int choice = 0;
             HeapMenuActions action;
             do {
-                System.out.println("What would you like to do now?:");
-                System.out.println("1. Print the current Max-Min Heap");
-                System.out.println("2. Print the original Heap, which was loaded from local file");
-                System.out.println("3. Perform Heapify on a specific index. Mutating Action!");
-                System.out.println("4. Extract the maximum key from the Max-Min-Heap. Mutating Action!");
-                System.out.println("5. Extract the minimum key from the Max-Min-Heap. Mutating Action!");
-                System.out.println("6. Insert key to the Max-Min-Heap. Mutating Action!");
-                System.out.println("7. Delete index from the Max-Min-Heap. Mutating Action!");
-                System.out.println("8. Exit Program");
-                System.out.print("Please Enter Your Choice: ");
+                presentHeapMenuText();
                 Scanner scanner = new Scanner(System.in);
                 if (scanner.hasNextInt()) {
                     choice = scanner.nextInt();
@@ -106,8 +87,6 @@ public class MaxMinHeapPlayground {
                 System.out.println("Non Valid Selection. Please choose again");
         }
         System.out.println();
-
-
     }
 
     private static void handleHeapMenuAction(HeapMenuActions action){
@@ -262,6 +241,34 @@ public class MaxMinHeapPlayground {
         }
         scanner.nextLine();
         System.out.println();
+    }
+
+    private static void presentTextForStartMenu() {
+        System.out.println("Welcome to the Max-Min Heap Playground");
+        System.out.println("Please choose an option");
+        System.out.println("1. Build a Max-Min Heap from data stored in a local txt file");
+        System.out.println("2. Exit Program");
+        System.out.print("Please Enter Your Choice: ");
+    }
+
+    private static void presentHeapMenuIntroductionText() {
+        System.out.println("Playground is ready for you");
+        System.out.println("You can view your original Heap");
+        System.out.println("You can incrementally perform heapify actions on the original heap, thus mutating it, step by step into Max-Min Heap");
+        System.out.println("In Addition, we've already built a Max-Min-Heap from your original heap. You can perform actions on it also.");
+    }
+
+    private static void presentHeapMenuText() {
+        System.out.println("What would you like to do now?:");
+        System.out.println("1. Print the current Max-Min Heap");
+        System.out.println("2. Print the original Heap, which was loaded from local file");
+        System.out.println("3. Perform Heapify on a specific index. Mutating Action!");
+        System.out.println("4. Extract the maximum key from the Max-Min-Heap. Mutating Action!");
+        System.out.println("5. Extract the minimum key from the Max-Min-Heap. Mutating Action!");
+        System.out.println("6. Insert key to the Max-Min-Heap. Mutating Action!");
+        System.out.println("7. Delete index from the Max-Min-Heap. Mutating Action!");
+        System.out.println("8. Exit Program");
+        System.out.print("Please Enter Your Choice: ");
     }
 
 }

@@ -1,7 +1,12 @@
 package student.honig.roey;
 
 import java.util.ArrayList;
-
+/** This is a service class with static methods to build Max-Min Heap and perform numerous actions on it
+ *
+ * @author Roey Honig
+ * @author ID: roeyhonig94@gmail.com
+ * @author ID: 060873940
+ */
 public class MaxMinHeapService {
 
     public static void buildMinMaxHeapFromArray(ArrayList<Integer> A)
@@ -19,7 +24,45 @@ public class MaxMinHeapService {
         }
     }
 
-    public static boolean isOnMinLevel(int i) {
+    public static void heapExtractMax(ArrayList<Integer> A){
+        int indexOfLast = getIndexOfLastElementInTheSubHeap(A,0);
+        A.set(0,A.get(indexOfLast));
+        A.remove(indexOfLast);
+        buildMinMaxHeapFromArray(A);
+    }
+
+    public static void heapExtractMin(ArrayList<Integer> A){
+        int indexOfLast = getIndexOfLastElementInTheSubHeap(A,0);
+        int indexOfMiniumKey = 0;
+        if (hasRightChild(A,0)) {
+            indexOfMiniumKey = A.get(1) < A.get(2) ? 1 : 2;
+        } else {
+            indexOfMiniumKey = 1;
+        }
+        A.set(indexOfMiniumKey,A.get(indexOfLast));
+        A.remove(indexOfLast);
+        buildMinMaxHeapFromArray(A);
+    }
+
+    public static void heapInsert(ArrayList<Integer> A, Integer key){
+        A.add(key);
+        buildMinMaxHeapFromArray(A);
+    }
+
+    public static boolean heapDelete(ArrayList<Integer> A, int i){
+        if (A.size() == 0 || i < 0 || i >= A.size()) {
+            return false;
+        }
+        int indexOfLast = getIndexOfLastElementInTheSubHeap(A,0);
+        A.set(i,A.get(indexOfLast));
+        A.remove(indexOfLast);
+        buildMinMaxHeapFromArray(A);
+        return true;
+    }
+
+    // Private
+
+    private static boolean isOnMinLevel(int i) {
         int j = i + 1;
         if (log2(j) % 2 == 0) {
             return false;
@@ -157,19 +200,7 @@ public class MaxMinHeapService {
         return indexToReturn;
     }
 
-    private static int getIndexOfLargestChilde(ArrayList<Integer> A,int i) {
-        int indexLeft = leftChildIndex(i);
-        int indexRight = rightChildIndex(i);
-        int indexToReturn = indexLeft;
-        int maxKey = A.get(indexLeft);
-        if (indexRight < A.size() && maxKey < A.get(indexRight)) {
-            maxKey = A.get(indexRight);
-            indexToReturn = indexRight;
-        }
-        return indexToReturn;
-    }
-
-    public static boolean isGrandchild(int m, int i){
+    private static boolean isGrandchild(int m, int i){
         if (leftChildIndex(i) == m || rightChildIndex(i) == m) {
             return false;
         }
@@ -193,14 +224,7 @@ public class MaxMinHeapService {
         }
     }
 
-    public static boolean hasGrandchildren(ArrayList<Integer> A, int i){
-        if (leftChildIndex(leftChildIndex(i)) >= A.size()) {
-            return false;
-        }
-        return true;
-    }
-
-    public static int getIndexOfLastElementInTheSubHeap(ArrayList<Integer> A, int i){
+    private static int getIndexOfLastElementInTheSubHeap(ArrayList<Integer> A, int i){
         if (hasChildren(A,i)) {
             if (hasRightChild(A,i)) {
                 int leftBranchLastElementIndex = getIndexOfLastElementInTheSubHeap(A,leftChildIndex(i));
@@ -212,43 +236,6 @@ public class MaxMinHeapService {
         } else {
             return i;
         }
-
-    }
-
-    public static void heapExtractMax(ArrayList<Integer> A){
-        int indexOfLast = getIndexOfLastElementInTheSubHeap(A,0);
-        A.set(0,A.get(indexOfLast));
-        A.remove(indexOfLast);
-        buildMinMaxHeapFromArray(A);
-    }
-
-    public static void heapExtractMin(ArrayList<Integer> A){
-        int indexOfLast = getIndexOfLastElementInTheSubHeap(A,0);
-        int indexOfMiniumKey = 0;
-        if (hasRightChild(A,0)) {
-            indexOfMiniumKey = A.get(1) < A.get(2) ? 1 : 2;
-        } else {
-            indexOfMiniumKey = 1;
-        }
-        A.set(indexOfMiniumKey,A.get(indexOfLast));
-        A.remove(indexOfLast);
-        buildMinMaxHeapFromArray(A);
-    }
-
-    public static void heapInsert(ArrayList<Integer> A, Integer key){
-        A.add(key);
-        buildMinMaxHeapFromArray(A);
-    }
-
-    public static boolean heapDelete(ArrayList<Integer> A, int i){
-        if (A.size() == 0 || i < 0 || i >= A.size()) {
-            return false;
-        }
-        int indexOfLast = getIndexOfLastElementInTheSubHeap(A,0);
-        A.set(i,A.get(indexOfLast));
-        A.remove(indexOfLast);
-        buildMinMaxHeapFromArray(A);
-        return true;
     }
 
 }
