@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// "/Users/roeyHonig/textFiles/array2.txt"
 /** This is the main program allowing the user to build a Max-Min heap from data, stored in a local text file, as well as manipulating the Max-Min heap by performing other actions on it.
  *
  * @author Roey Honig
@@ -154,7 +153,11 @@ public class MaxMinHeapPlayground {
     }
 
     private static boolean buildHeap(){
-        System.out.println("Please enter The full path, including .txt extension, to the file containing the Heap Dat: ");
+        System.out.println("Please enter The full path, including .txt extension, to the file containing the Heap Data.");
+        System.out.println("On a MacOS, this could be something like '/Users/roeyHonig/textFiles/array2.txt'");
+        System.out.println("On a PC machine, this could be something like 'C:/Documents/array2.txt'");
+        System.out.println("The text file should contain only numbers with the ',' as deliminator such as 1,2,3,4,5,6,7,8,9");
+        System.out.print("Please enter The full path:");
         Scanner scanner = new Scanner(System.in);
         String path = scanner.nextLine();
         originalHeap = getHeapFromFileWithFullPath(path);
