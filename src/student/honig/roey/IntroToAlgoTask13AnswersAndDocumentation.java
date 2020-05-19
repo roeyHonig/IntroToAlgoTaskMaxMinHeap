@@ -7,6 +7,12 @@ package student.honig.roey;
  * To Run the program, execute the main() method in class 'MaxMinHeapPlayground'
  *</p>
  *<p>
+ * The main program class, 'MaxMinHeapPlayground' , uses a service class called 'MaxMinHeapService'. It is a class with public static functions, to performe actions on a max-min heap as well as building a max-min heap from any Array.
+ *</p>
+ *<p>
+ * It should be noted we're not really using Arrays in this Task, but rather a more advanced Data Structure, called ArrayList in Java. It is a bit more flexible then Array, which can't grow or shrink in size. Since we'd like to perform many mutating actions (actions which will result in changing the original Array) on the heap, an ArrayList is better suited
+ *</p>
+ *<p>
  * A Max-Min heap is a binary tree with Maximum And Minimum levels (tree depth) intertwined together. The top most level, the root of the tree, is a maximum level, follow by a minimum level, followed by a maximum level and so on. Every sub-tree, rooted from a node in a Maximum level is by itself, a local max-min heap.
  *</p>
  *<p>
